@@ -1,9 +1,9 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Devices.aspx.cs" Inherits="Device_Licence_Control.Devices" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegisteredDevices.aspx.cs" Inherits="Device_Licence_Control.RegisteredDevices" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Manage Devices - Device Control</title>
+    <title>Register Device for User - Device Control</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; }
@@ -18,9 +18,7 @@
         .btn-logout:hover { background-color: #c0392b; }
         .container { padding: 30px; max-width: 1200px; margin: 0 auto; }
         .header-section { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
-        .quick-links { display: flex; gap: 10px; margin-top: 15px; }
-        .quick-link { background-color: #3498db; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 600; }
-        .quick-link:hover { background-color: #2980b9; }
+        .header-section h2 { color: #2c3e50; margin-bottom: 10px; }
         .form-section { background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
         .form-section h3 { color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
         .form-group { margin-bottom: 20px; }
@@ -32,13 +30,6 @@
         .message-box { padding: 15px; border-radius: 4px; margin-bottom: 20px; font-weight: 600; }
         .message-box.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         .message-box.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .devices-table { width: 100%; border-collapse: collapse; background-color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .devices-table thead { background-color: #2c3e50; color: white; }
-        .devices-table thead th { padding: 15px; text-align: left; font-weight: 600; }
-        .devices-table tbody td { padding: 15px; border-bottom: 1px solid #ecf0f1; }
-        .devices-table tbody tr:hover { background-color: #f8f9fa; }
-        .btn-delete { background-color: #e74c3c; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
-        .btn-delete:hover { background-color: #c0392b; }
         .btn-back { background-color: #95a5a6; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-block; margin-bottom: 20px; }
         .btn-back:hover { background-color: #7f8c8d; }
     </style>
@@ -60,55 +51,44 @@
             <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="AdminPanel.aspx" CssClass="btn-back">? Back to Admin Panel</asp:HyperLink>
 
             <div class="header-section">
-                <h2>?? Device Management</h2>
-                <div class="quick-links">
-                    <asp:HyperLink ID="hlDeviceTypes" runat="server" NavigateUrl="DeviceTypes.aspx" CssClass="quick-link">?? Manage Device Types</asp:HyperLink>
-                </div>
+                <h2>Register Device for User</h2>
             </div>
 
             <asp:Label ID="lblMessage" runat="server" CssClass="message-box"></asp:Label>
 
             <div class="form-section">
-                <h3>Add New Device</h3>
+                <h3>Device Registration Form</h3>
+                
                 <div class="form-group">
-                    <label>Device Name</label>
-                    <asp:TextBox ID="txtDeviceName" runat="server" placeholder="Enter device name"></asp:TextBox>
+                    <label>Select User (Owner)</label>
+                    <asp:DropDownList ID="ddlUser" runat="server">
+                        <asp:ListItem Value="" Text="-- Select User --"></asp:ListItem>
+                    </asp:DropDownList>
                 </div>
+
                 <div class="form-group">
                     <label>Device Type</label>
                     <asp:DropDownList ID="ddlDeviceType" runat="server">
                         <asp:ListItem Value="" Text="-- Select Device Type --"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
+
                 <div class="form-group">
-                    <label>Device Model</label>
-                    <asp:TextBox ID="txtDeviceModel" runat="server" placeholder="Enter device model"></asp:TextBox>
+                    <label>Device Name</label>
+                    <asp:TextBox ID="txtDeviceName" runat="server" placeholder="Enter device name"></asp:TextBox>
                 </div>
+
                 <div class="form-group">
                     <label>Serial Number</label>
                     <asp:TextBox ID="txtSerialNumber" runat="server" placeholder="Enter serial number"></asp:TextBox>
                 </div>
-                <asp:Button ID="btnAddDevice" runat="server" Text="Add Device" CssClass="btn-add" OnClick="btnAddDevice_Click" />
-            </div>
 
-            <div class="form-section">
-                <h3>Devices List</h3>
-                <div style="overflow-x: auto;">
-                    <asp:GridView ID="gvDevices" runat="server" AutoGenerateColumns="False" OnRowCommand="gvDevices_RowCommand" CssClass="devices-table">
-                        <Columns>
-                            <asp:BoundField DataField="DeviceId" HeaderText="ID" />
-                            <asp:BoundField DataField="DeviceName" HeaderText="Device Name" />
-                            <asp:BoundField DataField="DeviceTypeId" HeaderText="Type ID" />
-                            <asp:BoundField DataField="DeviceModel" HeaderText="Model" />
-                            <asp:BoundField DataField="SerialNumber" HeaderText="Serial Number" />
-                            <asp:TemplateField HeaderText="Actions">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnDelete" runat="server" CommandName="DeleteDevice" CommandArgument='<%# Eval("DeviceId") %>' Text="Delete" CssClass="btn-delete" OnClientClick="return confirm('Delete this device?');" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
+                <div class="form-group">
+                    <label>Registration Date</label>
+                    <asp:TextBox ID="txtRegisterDate" runat="server" Type="date"></asp:TextBox>
                 </div>
+
+                <asp:Button ID="btnRegisterDevice" runat="server" Text="Register Device" CssClass="btn-add" OnClick="btnRegisterDevice_Click" />
             </div>
         </div>
     </form>

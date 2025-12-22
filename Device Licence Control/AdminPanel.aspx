@@ -155,10 +155,16 @@
             <asp:Label ID="lblMessage" runat="server" CssClass="message-box"></asp:Label>
 
             <div class="admin-header">
-                <h2>Add New Device</h2>
-                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="Devices.aspx">ADD DEVICE</asp:HyperLink>
+                <h2>Register Device for User</h2>
+                <asp:HyperLink ID="hlRegisteredDevices" runat="server" NavigateUrl="RegisteredDevices.aspx">Register Device</asp:HyperLink>
             </div>
-            <asp:Label ID="Label1" runat="server" CssClass="message-box"></asp:Label>
+            <asp:Label ID="Label2" runat="server" CssClass="message-box"></asp:Label>
+
+            <div class="admin-header">
+                <h2>Manage Device Types</h2>
+                <asp:HyperLink ID="hlDeviceTypes" runat="server" NavigateUrl="DeviceTypes.aspx">Add/Delete Device Types</asp:HyperLink>
+            </div>
+            <asp:Label ID="Label3" runat="server" CssClass="message-box"></asp:Label>
         </div>
 
     </form>

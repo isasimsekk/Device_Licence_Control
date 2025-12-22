@@ -186,14 +186,11 @@
                     <h3>View Profile</h3>
                     <p>Access and manage your account information and preferences.</p>
                 </asp:HyperLink>
-                <div class="feature-card">
-                    <h3>Device Licenses</h3>
+                <asp:HyperLink ID="hlMyDeviceLicenses" runat="server" NavigateUrl="MyDeviceLicenses.aspx" CssClass="feature-card">
+                    <h3>My Device Licenses</h3>
                     <p>Monitor and manage your device licenses.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>My Devices</h3>
-                    <p>View and manage devices associated with your account.</p>
-                </div>
+                </asp:HyperLink>
+                <asp:HyperLink ID="hlMyDevices" runat="server" NavigateUrl="MyDevices.aspx" CssClass="feature-card"><h3>My Devices</h3><p>View and manage devices associated with your account.</p></asp:HyperLink>
                 <div class="feature-card">
                     <h3>Create A New Key</h3>
                     <p>Create key for your device.</p>

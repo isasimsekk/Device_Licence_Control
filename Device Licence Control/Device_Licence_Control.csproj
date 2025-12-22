@@ -121,14 +121,16 @@
     <Content Include="Content\Site.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="Devices.aspx" />
+    <Content Include="DeviceTypes.aspx" />
     <Content Include="Diagnostic.aspx" />
     <Content Include="EditProfile.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="images\gear.png" />
     <Content Include="Login.aspx" />
+    <Content Include="MyDeviceLicenses.aspx" />
     <Content Include="Register.aspx" />
+    <Content Include="RegisteredDevices.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -233,12 +235,12 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Devices.aspx.cs">
-      <DependentUpon>Devices.aspx</DependentUpon>
+    <Compile Include="DeviceTypes.aspx.cs">
+      <DependentUpon>DeviceTypes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Devices.aspx.designer.cs">
-      <DependentUpon>Devices.aspx</DependentUpon>
+    <Compile Include="DeviceTypes.aspx.designer.cs">
+      <DependentUpon>DeviceTypes.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditProfile.aspx.cs">
       <DependentUpon>EditProfile.aspx</DependentUpon>
@@ -258,6 +260,20 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs" />
+    <Compile Include="MyDeviceLicenses.aspx.cs">
+      <DependentUpon>MyDeviceLicenses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyDeviceLicenses.aspx.designer.cs">
+      <DependentUpon>MyDeviceLicenses.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyDevices.aspx.cs">
+      <DependentUpon>MyDevices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyDevices.aspx.designer.cs">
+      <DependentUpon>MyDevices.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -265,6 +281,13 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegisteredDevices.aspx.cs">
+      <DependentUpon>RegisteredDevices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisteredDevices.aspx.designer.cs">
+      <DependentUpon>RegisteredDevices.aspx</DependentUpon>
     </Compile>
     <Compile Include="SecurePageBase.cs">
       <SubType>ASPXCodeBehind</SubType>

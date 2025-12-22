@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Device_Licence_Control
-{
-
-
-    public partial class Dashboard
-    {
-
+namespace Device_Licence_Control {
+    
+    
+    public partial class Dashboard {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        
         /// <summary>
         /// pnlAdminButton control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlAdminButton;
-
+        
         /// <summary>
         /// hlAdminPanel control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hlAdminPanel;
-
+        
         /// <summary>
         /// litUserName control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litUserName;
-
+        
         /// <summary>
         /// btnLogout control.
         /// </summary>
@@ -58,7 +56,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLogout;
-
+        
         /// <summary>
         /// pnlAdminNotice control.
         /// </summary>
@@ -67,7 +65,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlAdminNotice;
-
+        
         /// <summary>
         /// hlViewProfile control.
         /// </summary>
@@ -76,5 +74,23 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hlViewProfile;
+        
+        /// <summary>
+        /// hlMyDeviceLicenses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink hlMyDeviceLicenses;
+        
+        /// <summary>
+        /// hlMyDevices control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink hlMyDevices;
     }
 }

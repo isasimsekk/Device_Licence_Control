@@ -10,7 +10,7 @@
 namespace Device_Licence_Control {
     
     
-    public partial class AdminPanel {
+    public partial class MyDeviceLicenses {
         
         /// <summary>
         /// form1 control.
@@ -49,13 +49,13 @@ namespace Device_Licence_Control {
         protected global::System.Web.UI.WebControls.Button btnLogout;
         
         /// <summary>
-        /// hlUsers control.
+        /// hlBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlUsers;
+        protected global::System.Web.UI.WebControls.HyperLink hlBack;
         
         /// <summary>
         /// lblMessage control.
@@ -67,39 +67,30 @@ namespace Device_Licence_Control {
         protected global::System.Web.UI.WebControls.Label lblMessage;
         
         /// <summary>
-        /// hlRegisteredDevices control.
+        /// pnlLicenses control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlRegisteredDevices;
+        protected global::System.Web.UI.WebControls.Panel pnlLicenses;
         
         /// <summary>
-        /// Label2 control.
+        /// gvDeviceLicenses control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.GridView gvDeviceLicenses;
         
         /// <summary>
-        /// hlDeviceTypes control.
+        /// pnlEmpty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlDeviceTypes;
-        
-        /// <summary>
-        /// Label3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Panel pnlEmpty;
     }
 }
