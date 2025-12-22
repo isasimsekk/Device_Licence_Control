@@ -1,5 +1,7 @@
 using System;
 using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Device_Licence_Control
 {
@@ -19,6 +21,7 @@ namespace Device_Licence_Control
                 litUserName.Text = Utils.SessionManager.GetUserFullName(this);
                 txtOwnerID.Text = userId.ToString();
                 LoadPackages();
+                LoadUserKeys();
             }
         }
 
@@ -56,6 +59,57 @@ namespace Device_Licence_Control
             }
         }
 
+        private void LoadUserKeys()
+        {
+            try
+            {
+                int userId = Utils.SessionManager.GetUserId(this);
+                
+                string connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    
+                    string query = @"SELECT 
+                                        ak.[Key], 
+                                        p.PackageModel AS Label, 
+                                        ak.CreatedDate, 
+                                        ak.Status 
+                                    FROM [dbo].[ActivationKey] ak 
+                                    JOIN [dbo].[Package] p ON ak.PackageID = p.PackageID 
+                                    WHERE ak.OwnerID = @OwnerID 
+                                    ORDER BY ak.CreatedDate DESC";
+                    
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@OwnerID", userId);
+                    
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    
+                    if (dt.Rows.Count > 0)
+                    {
+                        gvKeys.DataSource = dt;
+                        gvKeys.DataBind();
+                        pnlKeys.Visible = true;
+                        pnlEmpty.Visible = false;
+                    }
+                    else
+                    {
+                        pnlKeys.Visible = false;
+                        pnlEmpty.Visible = true;
+                    }
+                    
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LoadUserKeys Error: " + ex.Message);
+                ShowError("Error loading your keys: " + ex.Message);
+            }
+        }
+
         protected void btnCreateKey_Click(object sender, EventArgs e)
         {
             try
@@ -72,53 +126,65 @@ namespace Device_Licence_Control
 
                 string key = GenerateActivationKey();
 
-                DBConnection db = new DBConnection();
-                string query = string.Format(
-                    "INSERT INTO [dbo].[ActivationKey] (Key, OwnerID, PackageID, CreatedDate, Status) VALUES ('{0}', {1}, {2}, GETDATE(), '{3}')",
-                    key,
-                    ownerID,
-                    packageID,
-                    status
-                );
-
-                bool success = db.execute(query);
-
-                if (success)
+                try
                 {
-                    ShowSuccess("Activation key created successfully! Key: " + key);
-                    ddlPackage.SelectedIndex = 0;
+                    string connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(connectionString))
+                    {
+                        con.Open();
+                        
+                        string query = "INSERT INTO [dbo].[ActivationKey] ([Key], OwnerID, PackageID, Status, CreatedDate) VALUES (@Key, @OwnerID, @PackageID, @Status, GETDATE())";
+                        
+                        SqlCommand cmd = new SqlCommand(query, con);
+                        cmd.Parameters.AddWithValue("@Key", key);
+                        cmd.Parameters.AddWithValue("@OwnerID", int.Parse(ownerID));
+                        cmd.Parameters.AddWithValue("@PackageID", int.Parse(packageID));
+                        cmd.Parameters.AddWithValue("@Status", status);
+                        
+                        int result = cmd.ExecuteNonQuery();
+                        
+                        if (result > 0)
+                        {
+                            ShowSuccess("Activation key created successfully!");
+                            ddlPackage.SelectedIndex = 0;
+                            LoadUserKeys();
+                        }
+                        else
+                        {
+                            ShowError("Failed to create activation key. Please try again.");
+                        }
+                        
+                        con.Close();
+                    }
                 }
-                else
+                catch (SqlException sqlEx)
                 {
-                    ShowError("Failed to create activation key. Please try again.");
+                    System.Diagnostics.Debug.WriteLine("SQL Error: " + sqlEx.Message);
+                    System.Diagnostics.Debug.WriteLine("SQL Error Details: " + sqlEx.InnerException?.Message);
+                    ShowError("Database error: " + sqlEx.Message);
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("CreateKey Error: " + ex.Message);
-                ShowError("An error occurred while creating the key: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("CreateKey Error Details: " + ex.InnerException?.Message);
+                ShowError("An error occurred: " + ex.Message);
             }
         }
 
         private string GenerateActivationKey()
         {
-            const string prefix = "KEY";
-            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random random = new Random();
+            string key = "";
 
-            var random = new Random();
-
-            int numberPart = random.Next(0, 10000);
-            string numericSegment = numberPart.ToString("D4");
-
-            var letterSegment = new System.Text.StringBuilder(3);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 64; i++)
             {
-                letterSegment.Append(letters[random.Next(letters.Length)]);
+                key += chars[random.Next(chars.Length)];
             }
 
-            return $"{prefix}-{numericSegment}-{letterSegment}";
+            return key;
         }
-
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
