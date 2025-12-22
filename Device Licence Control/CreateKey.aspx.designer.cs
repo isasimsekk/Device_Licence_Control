@@ -10,7 +10,7 @@
 namespace Device_Licence_Control {
     
     
-    public partial class Dashboard {
+    public partial class CreateKey {
         
         /// <summary>
         /// form1 control.
@@ -22,22 +22,13 @@ namespace Device_Licence_Control {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// pnlAdminButton control.
+        /// hlDashboard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdminButton;
-        
-        /// <summary>
-        /// hlAdminPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlAdminPanel;
+        protected global::System.Web.UI.WebControls.HyperLink hlDashboard;
         
         /// <summary>
         /// litUserName control.
@@ -58,48 +49,57 @@ namespace Device_Licence_Control {
         protected global::System.Web.UI.WebControls.Button btnLogout;
         
         /// <summary>
-        /// pnlAdminNotice control.
+        /// hlBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdminNotice;
+        protected global::System.Web.UI.WebControls.HyperLink hlBack;
         
         /// <summary>
-        /// hlViewProfile control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlViewProfile;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
         
         /// <summary>
-        /// hlMyDeviceLicenses control.
+        /// txtOwnerID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlMyDeviceLicenses;
+        protected global::System.Web.UI.WebControls.TextBox txtOwnerID;
         
         /// <summary>
-        /// hlMyDevices control.
+        /// ddlPackage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlMyDevices;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPackage;
         
         /// <summary>
-        /// hlCreateKey control.
+        /// txtStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlCreateKey;
+        protected global::System.Web.UI.WebControls.TextBox txtStatus;
+        
+        /// <summary>
+        /// btnCreateKey control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCreateKey;
     }
 }

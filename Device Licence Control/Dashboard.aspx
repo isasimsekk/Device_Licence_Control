@@ -190,11 +190,14 @@
                     <h3>My Device Licenses</h3>
                     <p>Monitor and manage your device licenses.</p>
                 </asp:HyperLink>
-                <asp:HyperLink ID="hlMyDevices" runat="server" NavigateUrl="MyDevices.aspx" CssClass="feature-card"><h3>My Devices</h3><p>View and manage devices associated with your account.</p></asp:HyperLink>
-                <div class="feature-card">
+                <asp:HyperLink ID="hlMyDevices" runat="server" NavigateUrl="MyDevices.aspx" CssClass="feature-card">
+                    <h3>My Devices</h3>
+                    <p>View and manage devices associated with your account.</p>
+                </asp:HyperLink>
+                <asp:HyperLink ID="hlCreateKey" runat="server" NavigateUrl="CreateKey.aspx" CssClass="feature-card">
                     <h3>Create A New Key</h3>
                     <p>Create key for your device.</p>
-                </div>
+                </asp:HyperLink>
             </div>
         </div>
     </form>

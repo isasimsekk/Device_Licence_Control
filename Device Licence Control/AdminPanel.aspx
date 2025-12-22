@@ -165,6 +165,12 @@
                 <asp:HyperLink ID="hlDeviceTypes" runat="server" NavigateUrl="DeviceTypes.aspx">Add/Delete Device Types</asp:HyperLink>
             </div>
             <asp:Label ID="Label3" runat="server" CssClass="message-box"></asp:Label>
+
+            <div class="admin-header">
+                <h2>Manage Packages</h2>
+                <asp:HyperLink ID="hlPackages" runat="server" NavigateUrl="Packages.aspx">Add/Delete Packages</asp:HyperLink>
+            </div>
+            <asp:Label ID="Label4" runat="server" CssClass="message-box"></asp:Label>
         </div>
 
     </form>

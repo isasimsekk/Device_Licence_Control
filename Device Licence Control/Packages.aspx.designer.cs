@@ -10,7 +10,7 @@
 namespace Device_Licence_Control {
     
     
-    public partial class Dashboard {
+    public partial class Packages {
         
         /// <summary>
         /// form1 control.
@@ -20,15 +20,6 @@ namespace Device_Licence_Control {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        /// <summary>
-        /// pnlAdminButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdminButton;
         
         /// <summary>
         /// hlAdminPanel control.
@@ -58,48 +49,75 @@ namespace Device_Licence_Control {
         protected global::System.Web.UI.WebControls.Button btnLogout;
         
         /// <summary>
-        /// pnlAdminNotice control.
+        /// hlBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdminNotice;
+        protected global::System.Web.UI.WebControls.HyperLink hlBack;
         
         /// <summary>
-        /// hlViewProfile control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlViewProfile;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
         
         /// <summary>
-        /// hlMyDeviceLicenses control.
+        /// txtVersion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlMyDeviceLicenses;
+        protected global::System.Web.UI.WebControls.TextBox txtVersion;
         
         /// <summary>
-        /// hlMyDevices control.
+        /// txtPackageModel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlMyDevices;
+        protected global::System.Web.UI.WebControls.TextBox txtPackageModel;
         
         /// <summary>
-        /// hlCreateKey control.
+        /// btnAddPackage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlCreateKey;
+        protected global::System.Web.UI.WebControls.Button btnAddPackage;
+        
+        /// <summary>
+        /// pnlPackages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPackages;
+        
+        /// <summary>
+        /// gvPackages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvPackages;
+        
+        /// <summary>
+        /// pnlEmpty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlEmpty;
     }
 }
