@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -64,5 +64,28 @@ namespace Device_Licence_Control
 
         }
 
+        public bool ExecuteStoredProcedure(string storedProcName, SqlParameter[] parameters = null)
+        {
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(storedProcName, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                con.Close();
+                return false;
+            }
+        }
     }
 }

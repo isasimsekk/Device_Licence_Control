@@ -27,6 +27,8 @@
         .form-group input[type="email"] { width: 100%; padding: 12px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 14px; }
         .form-group input:focus { outline: none; border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .form-group .info-text { color: #7f8c8d; font-size: 12px; margin-top: 5px; }
+        .form-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ecf0f1; }
+        .form-section h3 { color: #2c3e50; font-size: 16px; margin-bottom: 20px; }
         .button-group { display: flex; gap: 10px; margin-top: 30px; }
         .btn-save { background-color: #27ae60; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background-color 0.3s; flex: 1; }
         .btn-save:hover { background-color: #229954; }
@@ -64,21 +66,37 @@
                     <div class="info-text">Your account name cannot be changed</div>
                 </div>
 
-                <div class="form-group">
-                    <label for="txtCurrentPassword">Current Password</label>
-                    <asp:TextBox ID="txtCurrentPassword" runat="server" TextMode="Password" placeholder="Enter your current password"></asp:TextBox>
-                    <div class="info-text">Required to confirm your identity</div>
+                <div class="form-section">
+                    <h3>Location Information</h3>
+                    <div class="form-group">
+                        <label for="txtCity">City</label>
+                        <asp:TextBox ID="txtCity" runat="server" placeholder="Enter your city"></asp:TextBox>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtCountry">Country</label>
+                        <asp:TextBox ID="txtCountry" runat="server" placeholder="Enter your country"></asp:TextBox>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="txtNewPassword">New Password (Optional)</label>
-                    <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password" placeholder="Leave blank to keep current password"></asp:TextBox>
-                    <div class="info-text">Password must be at least 6 characters</div>
-                </div>
+                <div class="form-section">
+                    <h3>Security</h3>
+                    <div class="form-group">
+                        <label for="txtCurrentPassword">Current Password</label>
+                        <asp:TextBox ID="txtCurrentPassword" runat="server" TextMode="Password" placeholder="Enter your current password"></asp:TextBox>
+                        <div class="info-text">Required to confirm your identity</div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="txtConfirmPassword">Confirm New Password</label>
-                    <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" placeholder="Confirm your new password"></asp:TextBox>
+                    <div class="form-group">
+                        <label for="txtNewPassword">New Password (Optional)</label>
+                        <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password" placeholder="Leave blank to keep current password"></asp:TextBox>
+                        <div class="info-text">Password must be at least 6 characters</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtConfirmPassword">Confirm New Password</label>
+                        <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" placeholder="Confirm your new password"></asp:TextBox>
+                    </div>
                 </div>
 
                 <div class="button-group">

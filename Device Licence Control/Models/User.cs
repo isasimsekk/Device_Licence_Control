@@ -10,5 +10,7 @@ namespace Device_Licence_Control.Models
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
     }
 }

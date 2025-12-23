@@ -29,7 +29,7 @@ namespace Device_Licence_Control
                 string userFullName = Utils.SessionManager.GetUserFullName(this);
                 
                 DBConnection db = new DBConnection();
-                string query = "SELECT UserId, FullName, IsActive, isAdmin, CreatedAt FROM [User] WHERE FullName = '" + userFullName + "'";
+                string query = "SELECT UserId, FullName, IsActive, isAdmin, CreatedAt, City, Country FROM [User] WHERE FullName = '" + userFullName + "'";
                 DataSet ds = db.getSelect(query);
 
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -41,6 +41,8 @@ namespace Device_Licence_Control
                     bool isActive = Convert.ToBoolean(row["IsActive"]);
                     bool isAdmin = Convert.ToBoolean(row["isAdmin"]);
                     DateTime createdDate = Convert.ToDateTime(row["CreatedAt"]);
+                    string city = row["City"] != DBNull.Value ? row["City"].ToString() : "";
+                    string country = row["Country"] != DBNull.Value ? row["Country"].ToString() : "";
 
                     litFullName.Text = fullName;
                     litUserId.Text = userId.ToString();
@@ -52,6 +54,19 @@ namespace Device_Licence_Control
                         ? "<span class=\"badge badge-active\">Active</span>" 
                         : "<span class=\"badge badge-inactive\">Inactive</span>";
                     litCreatedDate.Text = createdDate.ToString("MMMM dd, yyyy");
+                    
+                    // Display location information
+                    if (!string.IsNullOrWhiteSpace(city) || !string.IsNullOrWhiteSpace(country))
+                    {
+                        litLocation.Text = string.Format("{0}{1}{2}",
+                            city,
+                            (!string.IsNullOrWhiteSpace(city) && !string.IsNullOrWhiteSpace(country)) ? ", " : "",
+                            country);
+                    }
+                    else
+                    {
+                        litLocation.Text = "<span style=\"color: #bdc3c7;\">Not specified</span>";
+                    }
                 }
                 else
                 {

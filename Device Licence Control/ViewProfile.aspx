@@ -89,6 +89,10 @@
                             <div class="info-label">Member Since</div>
                             <div class="info-value"><asp:Literal ID="litCreatedDate" runat="server"></asp:Literal></div>
                         </div>
+                        <div class="info-item">
+                            <div class="info-label">Location</div>
+                            <div class="info-value"><asp:Literal ID="litLocation" runat="server"></asp:Literal></div>
+                        </div>
                     </div>
                 </div>
 
