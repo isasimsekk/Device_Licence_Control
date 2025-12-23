@@ -29,21 +29,7 @@ namespace Device_Licence_Control
                 DBConnection db = new DBConnection();
 
                 // Query user's device licenses from KeyDeviceAssignment table
-                string query = @"
-                SELECT 
-                    kda.KeyDeviceAssignmentID,
-                    kda.ActivationKeyID,
-                    dt.typeName AS DeviceModel,       
-                    rd.DeviceName,                    
-                    kda.AssignmentDate,
-                    rd.Status,                        
-                    rd.RegisterDate AS CreatedDate    
-                FROM [dbo].[KeyDeviceAssignment] kda
-                INNER JOIN [dbo].[ActivationKey] ak ON kda.ActivationKeyID = ak.ActivationKeyID
-                INNER JOIN [dbo].[RegisteredDevice] rd ON kda.DeviceID = rd.DeviceID
-                LEFT JOIN [dbo].[DeviceType] dt ON rd.DeviceTypeID = dt.DeviceTypeID
-                WHERE ak.OwnerID = " + userId + @"
-                ORDER BY kda.AssignmentDate DESC";
+                string query = @"EXEC [dbo].[GetUserLicenses] " + userId;
 
                 DataSet ds = db.getSelect(query);
 

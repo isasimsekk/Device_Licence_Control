@@ -57,7 +57,7 @@
         </div>
 
         <div class="container">
-            <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="AdminPanel.aspx" CssClass="btn-back">? Back to Admin Panel</asp:HyperLink>
+            <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="AdminPanel.aspx" CssClass="btn-back">Back to Admin Panel</asp:HyperLink>
 
             <div class="header-section">
                 <h2>Manage Device Types</h2>

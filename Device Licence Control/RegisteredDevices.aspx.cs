@@ -7,12 +7,14 @@ namespace Device_Licence_Control
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Check if user is logged in
             if (!Utils.SessionManager.IsUserLoggedIn(this))
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
 
+            // Check if user is admin
             if (!Utils.SessionManager.IsUserAdmin(this))
             {
                 Response.Redirect("Dashboard.aspx");
@@ -21,10 +23,12 @@ namespace Device_Licence_Control
 
             if (!IsPostBack)
             {
-                litUserName.Text = Utils.SessionManager.GetUserFullName(this);
                 LoadUsers();
                 LoadDeviceTypes();
-                SetDefaultRegisterDate();
+                LoadRegisteredDevices();
+
+                // Display current user name
+                litUserName.Text = Utils.SessionManager.GetUserFullName(this);
             }
         }
 
@@ -33,27 +37,24 @@ namespace Device_Licence_Control
             try
             {
                 DBConnection db = new DBConnection();
-                string query = "SELECT UserID, FullName FROM [dbo].[User] ORDER BY FullName";
+                string query = "SELECT UserId, FullName FROM [User] ORDER BY FullName";
                 DataSet ds = db.getSelect(query);
 
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     ddlUser.DataSource = ds.Tables[0];
                     ddlUser.DataTextField = "FullName";
-                    ddlUser.DataValueField = "UserID";
+                    ddlUser.DataValueField = "UserId";
                     ddlUser.DataBind();
-                    ddlUser.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Select User --", ""));
                 }
-                else
-                {
-                    ddlUser.Items.Clear();
-                    ddlUser.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- No Users Available --", ""));
-                }
+
+                // Add default item at the beginning
+                ddlUser.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Select User --", ""));
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("LoadUsers Error: " + ex.Message);
-                ShowError("Error loading users: " + ex.Message);
+                ShowMessage("Error loading users: " + ex.Message, "error");
             }
         }
 
@@ -71,102 +72,129 @@ namespace Device_Licence_Control
                     ddlDeviceType.DataTextField = "TypeName";
                     ddlDeviceType.DataValueField = "DeviceTypeID";
                     ddlDeviceType.DataBind();
-                    ddlDeviceType.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Select Device Type --", ""));
                 }
-                else
-                {
-                    ddlDeviceType.Items.Clear();
-                    ddlDeviceType.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- No Device Types Available --", ""));
-                }
+
+                // Add default item at the beginning
+                ddlDeviceType.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Select Device Type --", ""));
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("LoadDeviceTypes Error: " + ex.Message);
-                ShowError("Error loading device types: " + ex.Message);
+                ShowMessage("Error loading device types: " + ex.Message, "error");
             }
         }
 
-        private void SetDefaultRegisterDate()
+        private void LoadRegisteredDevices()
         {
-            txtRegisterDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            try
+            {
+                DBConnection db = new DBConnection();
+                string query = @"
+                    SELECT 
+                        rd.DeviceID,
+                        rd.DeviceName,
+                        rd.SerialNumber,
+                        rd.OwnerID,
+                        u.FullName as OwnerName,
+                        dt.TypeName,
+                        rd.RegisterDate,
+                        rd.[Status]
+                    FROM [dbo].[RegisteredDevice] rd
+                    INNER JOIN [User] u ON rd.OwnerID = u.UserId
+                    INNER JOIN [dbo].[DeviceType] dt ON rd.DeviceTypeID = dt.DeviceTypeID
+                    ORDER BY rd.RegisterDate DESC";
+                
+                DataSet ds = db.getSelect(query);
+
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    gvRegisteredDevices.DataSource = ds.Tables[0];
+                    gvRegisteredDevices.DataBind();
+                    pnlDevicesList.Visible = true;
+                    pnlNoDevices.Visible = false;
+                }
+                else
+                {
+                    pnlDevicesList.Visible = false;
+                    pnlNoDevices.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LoadRegisteredDevices Error: " + ex.Message);
+                ShowMessage("Error loading devices: " + ex.Message, "error");
+            }
         }
 
         protected void btnRegisterDevice_Click(object sender, EventArgs e)
         {
             try
             {
-                string userId = ddlUser.SelectedValue;
-                string deviceTypeId = ddlDeviceType.SelectedValue;
-                string deviceName = txtDeviceName.Text.Trim();
-                string serialNumber = txtSerialNumber.Text.Trim();
-                string registerDate = txtRegisterDate.Text.Trim();
-
-                if (string.IsNullOrWhiteSpace(userId))
+                if (string.IsNullOrEmpty(ddlUser.SelectedValue))
                 {
-                    ShowError("Please select a user.");
+                    ShowMessage("Please select a user.", "error");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(deviceTypeId))
+                if (string.IsNullOrEmpty(ddlDeviceType.SelectedValue))
                 {
-                    ShowError("Please select a device type.");
+                    ShowMessage("Please select a device type.", "error");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(deviceName))
+                if (string.IsNullOrEmpty(txtDeviceName.Text.Trim()))
                 {
-                    ShowError("Device name is required.");
+                    ShowMessage("Please enter a device name.", "error");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(serialNumber))
+                if (string.IsNullOrEmpty(txtSerialNumber.Text.Trim()))
                 {
-                    ShowError("Serial number is required.");
+                    ShowMessage("Please enter a serial number.", "error");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(registerDate))
+                if (string.IsNullOrEmpty(txtRegisterDate.Text.Trim()))
                 {
-                    ShowError("Registration date is required.");
+                    ShowMessage("Please enter a registration date.", "error");
                     return;
                 }
 
+                int userID = int.Parse(ddlUser.SelectedValue);
+                int typeID = int.Parse(ddlDeviceType.SelectedValue);
+                string deviceName = txtDeviceName.Text.Trim().Replace("'", "''");
+                string serialNumber = txtSerialNumber.Text.Trim().Replace("'", "''");
+                DateTime registerDate = DateTime.Parse(txtRegisterDate.Text);
+
+                // Insert device
                 DBConnection db = new DBConnection();
-                string query = string.Format(
-                    "INSERT INTO [dbo].[RegisteredDevice] (OwnerID, DeviceTypeID, DeviceName, SerialNumber, RegisterDate, Status) VALUES ({0}, {1}, '{2}', '{3}', CONVERT(DATE, '{4}', 120), 'Unregistered')",
-                    userId,
-                    deviceTypeId,
-                    deviceName.Replace("'", "''"),
-                    serialNumber.Replace("'", "''"),
-                    registerDate
-                );
+                string insertQuery = string.Format(
+                    "INSERT INTO [dbo].[RegisteredDevice] (OwnerID, DeviceTypeID, DeviceName, SerialNumber, RegisterDate, [Status]) " +
+                    "VALUES ({0}, {1}, '{2}', '{3}', '{4:yyyy-MM-dd}', 'Active')",
+                    userID, typeID, deviceName, serialNumber, registerDate);
 
-                bool success = db.execute(query);
+                bool success = db.execute(insertQuery);
 
                 if (success)
                 {
-                    ShowSuccess("Device registered successfully.");
-                    ClearForm();
+                    ShowMessage("Device registered successfully!", "success");
+                    txtDeviceName.Text = "";
+                    txtSerialNumber.Text = "";
+                    txtRegisterDate.Text = "";
+                    ddlUser.SelectedValue = "";
+                    ddlDeviceType.SelectedValue = "";
+                    LoadRegisteredDevices();
                 }
                 else
                 {
-                    ShowError("Failed to register device. Please try again.");
+                    ShowMessage("Failed to register device. Please try again.", "error");
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("RegisterDevice Error: " + ex.Message);
-                ShowError("An error occurred while registering the device: " + ex.Message);
+                ShowMessage("Error: " + ex.Message, "error");
             }
-        }
-
-        private void ClearForm()
-        {
-            ddlUser.SelectedIndex = 0;
-            ddlDeviceType.SelectedIndex = 0;
-            txtDeviceName.Text = "";
-            txtSerialNumber.Text = "";
-            SetDefaultRegisterDate();
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
@@ -175,16 +203,40 @@ namespace Device_Licence_Control
             Response.Redirect("Login.aspx");
         }
 
-        private void ShowSuccess(string message)
+        protected void gvRegisteredDevices_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
         {
-            lblMessage.Text = message;
-            lblMessage.CssClass = "message-box success";
+            if (e.CommandName == "UnregisterDevice")
+            {
+                try
+                {
+                    // Extract DeviceID and UserID from CommandArgument
+                    string[] args = e.CommandArgument.ToString().Split(',');
+                    int deviceID = int.Parse(args[0]);
+                    int userID = int.Parse(args[1]);
+
+                    DBConnection db = new DBConnection();
+                    string storedProcedure = "EXEC [dbo].[UnregisterDevice] @DeviceID=" + deviceID + ", @UserID=" + userID;
+                    
+                    // Execute the stored procedure
+                    bool success = db.execute(storedProcedure);
+
+                    // Reload the grid
+                    LoadRegisteredDevices();
+                    
+                    ShowMessage("Device unregistered successfully!", "success");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("UnregisterDevice Error: " + ex.Message);
+                    ShowMessage("Error: " + ex.Message, "error");
+                }
+            }
         }
 
-        private void ShowError(string message)
+        private void ShowMessage(string message, string type)
         {
             lblMessage.Text = message;
-            lblMessage.CssClass = "message-box error";
+            lblMessage.CssClass = type == "error" ? "message-box error" : "message-box success";
         }
     }
 }
