@@ -220,11 +220,12 @@ namespace Device_Licence_Control
 
                 int newUserId = Convert.ToInt32(dsUserId.Tables[0].Rows[0]["UserId"]);
 
-                // 5. Insert emails
-                foreach (string email in emailsList)
+                // 5. Insert emails - last email as primary
+                for (int i = 0; i < emailsList.Count; i++)
                 {
+                    bool isPrimary = (i == emailsList.Count - 1) ? true : false;
                     string insertEmailQuery = "INSERT INTO [UserEmail] (UserId, Email, IsPrimary) " +
-                                            "VALUES (" + newUserId + ", '" + email + "', 0)";
+                                            "VALUES (" + newUserId + ", '" + emailsList[i] + "', " + (isPrimary ? 1 : 0) + ")";
                     db.execute(insertEmailQuery);
                 }
 

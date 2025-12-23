@@ -118,6 +118,55 @@ namespace Device_Licence_Control
                     }
                 }
             }
+            else if (e.CommandName == "DeleteUser")
+            {
+                int userId = 0;
+                if (int.TryParse(e.CommandArgument.ToString(), out userId) && userId > 0)
+                {
+                    // Prevent deleting the current logged-in user
+                    if (userId == Utils.SessionManager.GetUserId(this))
+                    {
+                        lblMessage.Text = "You cannot delete your own account.";
+                        lblMessage.CssClass = "message-box error-msg";
+                        return;
+                    }
+
+                    try
+                    {
+                        DBConnection db = new DBConnection();
+
+                        // Delete related phone numbers first
+                        string deletePhoneQuery = "DELETE FROM [UserPhone] WHERE UserId = " + userId;
+                        db.execute(deletePhoneQuery);
+
+                        // Delete related emails
+                        string deleteEmailQuery = "DELETE FROM [UserEmail] WHERE UserId = " + userId;
+                        db.execute(deleteEmailQuery);
+
+                        // Delete the user
+                        string deleteUserQuery = "DELETE FROM [User] WHERE UserId = " + userId;
+                        bool success = db.execute(deleteUserQuery);
+
+                        if (success)
+                        {
+                            lblMessage.Text = "User deleted successfully.";
+                            lblMessage.CssClass = "message-box success-msg";
+                            LoadUsers();
+                        }
+                        else
+                        {
+                            lblMessage.Text = "Failed to delete user.";
+                            lblMessage.CssClass = "message-box error-msg";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("DeleteUser Error: " + ex.Message);
+                        lblMessage.Text = "An error occurred while deleting the user.";
+                        lblMessage.CssClass = "message-box error-msg";
+                    }
+                }
+            }
         }
     }
 }

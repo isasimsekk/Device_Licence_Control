@@ -128,11 +128,10 @@
             transition: transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
             color: inherit;
-           
-            display: flex; 
-            flex-direction: column; 
-            height: 100%; 
-            justify-content: center; 
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
         }
 
             .feature-card:hover {
@@ -197,6 +196,10 @@
                 <asp:HyperLink ID="hlCreateKey" runat="server" NavigateUrl="CreateKey.aspx" CssClass="feature-card">
                     <h3>Create A New Key</h3>
                     <p>Create key for your device.</p>
+                </asp:HyperLink>
+                <asp:HyperLink ID="hlAssignment" runat="server" NavigateUrl="Assignment.aspx" CssClass="feature-card">
+                    <h3>Assignment</h3>
+                    <p>Assign your keys to your devices</p>
                 </asp:HyperLink>
             </div>
         </div>

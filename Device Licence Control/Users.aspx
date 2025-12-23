@@ -123,6 +123,13 @@
         .btn-deactivate:hover { 
             background-color: #c0392b; 
         }
+        .btn-delete { 
+            background-color: #c0392b; 
+            color: white; 
+        }
+        .btn-delete:hover { 
+            background-color: #a93226; 
+        }
         .btn-action:disabled {
             background-color: #95a5a6;
             cursor: not-allowed;
@@ -159,16 +166,16 @@
 <body>
     <form id="form1" runat="server">
         <div class="navbar">
-            <h1>?? Users Management</h1>
+            <h1>Users Management</h1>
             <div class="navbar-links">
-                <asp:HyperLink ID="hlBackDashboard" runat="server" NavigateUrl="Dashboard.aspx" CssClass="btn-back">? Back to Dashboard</asp:HyperLink>
+                <asp:HyperLink ID="hlBackDashboard" runat="server" NavigateUrl="Dashboard.aspx" CssClass="btn-back">Back to Dashboard</asp:HyperLink>
             </div>
         </div>
 
         <div class="container">
             <div class="header">
                 <h2>Manage System Users</h2>
-                <p>View and manage all users in the system. Promote users to admin or deactivate accounts.</p>
+                <p>View and manage all users in the system. Promote users to admin, deactivate accounts, or delete users permanently.</p>
             </div>
 
             <asp:Label ID="lblMessage" runat="server" CssClass="message-box"></asp:Label>
@@ -183,7 +190,7 @@
                                     <th>Full Name</th>
                                     <th style="width: 100px;">Status</th>
                                     <th style="width: 100px;">Role</th>
-                                    <th style="width: 250px;">Actions</th>
+                                    <th style="width: 350px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -218,6 +225,13 @@
                                     CommandArgument='<%# Eval("UserId") %>' 
                                     Visible='<%# Convert.ToBoolean(Eval("IsActive")) %>' 
                                     OnClientClick="return confirm('Are you sure you want to deactivate this user?');" />
+                                
+                                <asp:Button ID="btnDelete" runat="server" 
+                                    Text="Delete" 
+                                    CssClass="btn-action btn-delete" 
+                                    CommandName="DeleteUser" 
+                                    CommandArgument='<%# Eval("UserId") %>' 
+                                    OnClientClick="return confirm('Are you sure you want to permanently delete this user? This action cannot be undone.');" />
                             </td>
                         </tr>
                     </ItemTemplate>

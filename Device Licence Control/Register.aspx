@@ -278,7 +278,7 @@
                             <label>Phone Number <span class="required">*</span></label>
                             <asp:TextBox ID="txtPhone1" runat="server" placeholder="Enter phone number"></asp:TextBox>
                         </div>
-                        <select id="phoneType1" style="width: 120px;">
+                        <select id="phoneType1" name="phoneType1" style="width: 120px;">
                             <option value="Mobile">Mobile</option>
                             <option value="Home">Home</option>
                             <option value="Work">Work</option>
