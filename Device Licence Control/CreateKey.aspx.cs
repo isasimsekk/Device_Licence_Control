@@ -116,7 +116,6 @@ namespace Device_Licence_Control
             {
                 string ownerID = txtOwnerID.Text.Trim();
                 string packageID = ddlPackage.SelectedValue;
-                string status = "not transferred";
 
                 if (string.IsNullOrWhiteSpace(packageID))
                 {
@@ -128,33 +127,17 @@ namespace Device_Licence_Control
 
                 try
                 {
-                    string connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
-                    using (SqlConnection con = new SqlConnection(connectionString))
+                    bool success = CreateActivationKeyViaStoredProcedure(key, int.Parse(ownerID), int.Parse(packageID));
+
+                    if (success)
                     {
-                        con.Open();
-                        
-                        string query = "INSERT INTO [dbo].[ActivationKey] ([Key], OwnerID, PackageID, Status, CreatedDate) VALUES (@Key, @OwnerID, @PackageID, @Status, GETDATE())";
-                        
-                        SqlCommand cmd = new SqlCommand(query, con);
-                        cmd.Parameters.AddWithValue("@Key", key);
-                        cmd.Parameters.AddWithValue("@OwnerID", int.Parse(ownerID));
-                        cmd.Parameters.AddWithValue("@PackageID", int.Parse(packageID));
-                        cmd.Parameters.AddWithValue("@Status", status);
-                        
-                        int result = cmd.ExecuteNonQuery();
-                        
-                        if (result > 0)
-                        {
-                            ShowSuccess("Activation key created successfully!");
-                            ddlPackage.SelectedIndex = 0;
-                            LoadUserKeys();
-                        }
-                        else
-                        {
-                            ShowError("Failed to create activation key. Please try again.");
-                        }
-                        
-                        con.Close();
+                        ShowSuccess("Activation key created successfully!");
+                        ddlPackage.SelectedIndex = 0;
+                        LoadUserKeys();
+                    }
+                    else
+                    {
+                        ShowError("Failed to create activation key. Please try again.");
                     }
                 }
                 catch (SqlException sqlEx)
@@ -169,6 +152,28 @@ namespace Device_Licence_Control
                 System.Diagnostics.Debug.WriteLine("CreateKey Error: " + ex.Message);
                 System.Diagnostics.Debug.WriteLine("CreateKey Error Details: " + ex.InnerException?.Message);
                 ShowError("An error occurred: " + ex.Message);
+            }
+        }
+
+        private bool CreateActivationKeyViaStoredProcedure(string key, int ownerID, int packageID)
+        {
+            try
+            {
+                DBConnection db = new DBConnection();
+
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@Key", key),
+                    new SqlParameter("@OwnerID", ownerID),
+                    new SqlParameter("@PackageID", packageID)
+                };
+
+                return db.ExecuteStoredProcedure("usp_CreateActivationKey", parameters);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("CreateActivationKeyViaStoredProcedure Error: " + ex.Message);
+                throw;
             }
         }
 
