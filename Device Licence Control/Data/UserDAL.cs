@@ -14,9 +14,7 @@ namespace Device_Licence_Control.Data
             connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
         }
 
-        /// <summary>
-        /// Test database connection
-        /// </summary>
+        
         public bool TestConnection(out string errorMessage)
         {
             errorMessage = "";
@@ -37,10 +35,7 @@ namespace Device_Licence_Control.Data
             }
         }
 
-        /// <summary>
-        /// Authenticate user with full name and password using parameterized query
-        /// Uses exact column names from database: CreatedAt (datetime2) and isAdmin (lowercase)
-        /// </summary>
+    
         public Models.User AuthenticateUser(string fullName, int password)
         {
             try
@@ -49,7 +44,7 @@ namespace Device_Licence_Control.Data
                 {
                     con.Open();
 
-                    // Using exact column names from your database
+                   
                     string query = "SELECT UserId, FullName, Password, IsActive, isAdmin, CreatedAt FROM [User] " +
                                    "WHERE FullName = @FullName AND Password = @Password";
 
@@ -67,8 +62,8 @@ namespace Device_Licence_Control.Data
                             FullName = reader["FullName"].ToString(),
                             Password = Convert.ToInt32(reader["Password"]),
                             IsActive = Convert.ToBoolean(reader["IsActive"]),
-                            IsAdmin = Convert.ToBoolean(reader["isAdmin"]), // lowercase isAdmin from database
-                            CreatedDate = Convert.ToDateTime(reader["CreatedAt"]) // Maps CreatedAt to CreatedDate
+                            IsAdmin = Convert.ToBoolean(reader["isAdmin"]), 
+                            CreatedDate = Convert.ToDateTime(reader["CreatedAt"]) 
                         };
 
                         reader.Close();
@@ -92,9 +87,7 @@ namespace Device_Licence_Control.Data
             }
         }
 
-        /// <summary>
-        /// Get user by full name
-        /// </summary>
+       
         public Models.User GetUserByFullName(string fullName)
         {
             try
@@ -103,7 +96,7 @@ namespace Device_Licence_Control.Data
                 {
                     con.Open();
 
-                    // Using exact column names from your database
+                    
                     string query = "SELECT UserId, FullName, Password, IsActive, isAdmin, CreatedAt FROM [User] " +
                                    "WHERE FullName = @FullName";
 
@@ -120,8 +113,8 @@ namespace Device_Licence_Control.Data
                             FullName = reader["FullName"].ToString(),
                             Password = Convert.ToInt32(reader["Password"]),
                             IsActive = Convert.ToBoolean(reader["IsActive"]),
-                            IsAdmin = Convert.ToBoolean(reader["isAdmin"]), // lowercase isAdmin from database
-                            CreatedDate = Convert.ToDateTime(reader["CreatedAt"]) // Maps CreatedAt to CreatedDate
+                            IsAdmin = Convert.ToBoolean(reader["isAdmin"]), 
+                            CreatedDate = Convert.ToDateTime(reader["CreatedAt"]) 
                         };
 
                         reader.Close();
@@ -138,9 +131,7 @@ namespace Device_Licence_Control.Data
             }
         }
 
-        /// <summary>
-        /// Check if user exists by full name
-        /// </summary>
+       
         public bool UserExists(string fullName)
         {
             try

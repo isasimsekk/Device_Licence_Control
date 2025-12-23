@@ -20,6 +20,28 @@ namespace Device_Licence_Control
                 bool isAdmin = Utils.SessionManager.IsUserAdmin(this);
                 pnlAdminButton.Visible = isAdmin;
                 pnlAdminNotice.Visible = isAdmin;
+
+                LoadStatistics();
+            }
+        }
+
+        private void LoadStatistics()
+        {
+            try
+            {
+                Data.StatisticsDAL statsDAL = new Data.StatisticsDAL();
+                
+                int activeUserCount = statsDAL.GetActiveUserCount();
+                int totalDeviceCount = statsDAL.GetTotalRegisteredDeviceCount();
+                
+                litActiveUserCount.Text = activeUserCount.ToString();
+                litTotalDeviceCount.Text = totalDeviceCount.ToString();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error loading statistics: " + ex.Message);
+                litActiveUserCount.Text = "0";
+                litTotalDeviceCount.Text = "0";
             }
         }
 

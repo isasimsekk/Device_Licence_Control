@@ -111,6 +111,43 @@
             color: #856404;
         }
 
+        .statistics-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            color: white;
+        }
+
+        .stat-card.active-users {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-card.registered-devices {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+            .stat-card .stat-number {
+                font-size: 36px;
+                font-weight: bold;
+                margin: 10px 0;
+            }
+
+            .stat-card .stat-label {
+                font-size: 14px;
+                opacity: 0.9;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
         .features-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -172,6 +209,21 @@
             <div class="welcome-card">
                 <h2>Welcome to Dashboard</h2>
                 <p>You have successfully logged in to the Device Licence Control System.</p>
+
+                <div class="statistics-section">
+                    <div class="stat-card active-users">
+                        <div class="stat-label">Active Users</div>
+                        <div class="stat-number">
+                            <asp:Literal ID="litActiveUserCount" runat="server">0</asp:Literal>
+                        </div>
+                    </div>
+                    <div class="stat-card registered-devices">
+                        <div class="stat-label">Registered Devices</div>
+                        <div class="stat-number">
+                            <asp:Literal ID="litTotalDeviceCount" runat="server">0</asp:Literal>
+                        </div>
+                    </div>
+                </div>
 
                 <asp:Panel ID="pnlAdminNotice" runat="server" Visible="false">
                     <div class="admin-notice">

@@ -243,6 +243,7 @@
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Data\StatisticsDAL.cs" />
     <Compile Include="Data\UserDAL.cs" />
     <Compile Include="DBConnection.cs" />
     <Compile Include="Default.aspx.cs">
