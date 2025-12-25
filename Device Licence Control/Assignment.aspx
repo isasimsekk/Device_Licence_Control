@@ -58,7 +58,7 @@
         </div>
 
         <div class="container">
-            <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="Dashboard.aspx" CssClass="btn-back">? Back to Dashboard</asp:HyperLink>
+            <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="Dashboard.aspx" CssClass="btn-back">Back to Dashboard</asp:HyperLink>
 
             <div class="header-section">
                 <h2>Assign Activation Key to Device</h2>

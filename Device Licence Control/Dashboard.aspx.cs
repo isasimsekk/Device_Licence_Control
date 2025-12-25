@@ -33,15 +33,24 @@ namespace Device_Licence_Control
                 
                 int activeUserCount = statsDAL.GetActiveUserCount();
                 int totalDeviceCount = statsDAL.GetTotalRegisteredDeviceCount();
+                int totalKeysCount = statsDAL.GetTotalActivationKeysCount();
+                int unassignedKeysCount = statsDAL.GetUnassignedKeysCount();
+                int totalAssignmentsCount = statsDAL.GetTotalAssignmentsCount();
                 
                 litActiveUserCount.Text = activeUserCount.ToString();
                 litTotalDeviceCount.Text = totalDeviceCount.ToString();
+                litTotalKeysCount.Text = totalKeysCount.ToString();
+                litUnassignedKeysCount.Text = unassignedKeysCount.ToString();
+                litTotalAssignmentsCount.Text = totalAssignmentsCount.ToString();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Error loading statistics: " + ex.Message);
                 litActiveUserCount.Text = "0";
                 litTotalDeviceCount.Text = "0";
+                litTotalKeysCount.Text = "0";
+                litUnassignedKeysCount.Text = "0";
+                litTotalAssignmentsCount.Text = "0";
             }
         }
 

@@ -166,34 +166,42 @@ namespace Device_Licence_Control
                 string serialNumber = txtSerialNumber.Text.Trim().Replace("'", "''");
                 DateTime registerDate = DateTime.Parse(txtRegisterDate.Text);
 
-                // Insert device
+                // Insert device using executeWithException to get actual errors
                 DBConnection db = new DBConnection();
                 string insertQuery = string.Format(
                     "INSERT INTO [dbo].[RegisteredDevice] (OwnerID, DeviceTypeID, DeviceName, SerialNumber, RegisterDate, [Status]) " +
-                    "VALUES ({0}, {1}, '{2}', '{3}', '{4:yyyy-MM-dd}', 'Active')",
+                    "VALUES ({0}, {1}, '{2}', '{3}', '{4:yyyy-MM-dd}', 'unregistered')",
                     userID, typeID, deviceName, serialNumber, registerDate);
 
-                bool success = db.execute(insertQuery);
+                db.executeWithException(insertQuery);
 
-                if (success)
-                {
-                    ShowMessage("Device registered successfully!", "success");
-                    txtDeviceName.Text = "";
-                    txtSerialNumber.Text = "";
-                    txtRegisterDate.Text = "";
-                    ddlUser.SelectedValue = "";
-                    ddlDeviceType.SelectedValue = "";
-                    LoadRegisteredDevices();
-                }
-                else
-                {
-                    ShowMessage("Failed to register device. Please try again.", "error");
-                }
+                ShowMessage("Device registered successfully!", "success");
+                txtDeviceName.Text = "";
+                txtSerialNumber.Text = "";
+                txtRegisterDate.Text = "";
+                ddlUser.SelectedValue = "";
+                ddlDeviceType.SelectedValue = "";
+                LoadRegisteredDevices();
+            }
+            catch (FormatException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("RegisterDevice FormatException: " + ex.Message);
+                ShowMessage("Error: Invalid date format or numeric value. Please check your input.", "error");
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("RegisterDevice SqlException: " + ex.Message);
+                ShowMessage("Database Error: " + ex.Message, "error");
+            }
+            catch (ArgumentException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("RegisterDevice ArgumentException: " + ex.Message);
+                ShowMessage("Error: Invalid argument - " + ex.Message, "error");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("RegisterDevice Error: " + ex.Message);
-                ShowMessage("Error: " + ex.Message, "error");
+                System.Diagnostics.Debug.WriteLine("RegisterDevice Error: " + ex.GetType().Name + " - " + ex.Message);
+                ShowMessage("Error (" + ex.GetType().Name + "): " + ex.Message, "error");
             }
         }
 

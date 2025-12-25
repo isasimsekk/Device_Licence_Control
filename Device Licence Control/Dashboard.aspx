@@ -120,7 +120,7 @@
 
         .stat-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 25px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             text-align: center;
@@ -136,13 +136,13 @@
         }
 
             .stat-card .stat-number {
-                font-size: 36px;
+                font-size: 24px;
                 font-weight: bold;
-                margin: 10px 0;
+                margin: 5px 0;
             }
 
             .stat-card .stat-label {
-                font-size: 14px;
+                font-size: 12px;
                 opacity: 0.9;
                 text-transform: uppercase;
                 letter-spacing: 1px;
@@ -221,6 +221,24 @@
                         <div class="stat-label">Registered Devices</div>
                         <div class="stat-number">
                             <asp:Literal ID="litTotalDeviceCount" runat="server">0</asp:Literal>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="stat-label">Total Keys</div>
+                        <div class="stat-number">
+                            <asp:Literal ID="litTotalKeysCount" runat="server">0</asp:Literal>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div class="stat-label">Unassigned Keys</div>
+                        <div class="stat-number">
+                            <asp:Literal ID="litUnassignedKeysCount" runat="server">0</asp:Literal>
+                        </div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="stat-label">Total Assignments</div>
+                        <div class="stat-number">
+                            <asp:Literal ID="litTotalAssignmentsCount" runat="server">0</asp:Literal>
                         </div>
                     </div>
                 </div>

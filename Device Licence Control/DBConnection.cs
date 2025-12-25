@@ -64,6 +64,20 @@ namespace Device_Licence_Control
 
         }
 
+        public void executeWithException(string sqlstr)
+        {
+            con.Open();
+            try
+            {
+                SqlCommand exec = new SqlCommand(sqlstr, con);
+                exec.ExecuteNonQuery();
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public bool ExecuteStoredProcedure(string storedProcName, SqlParameter[] parameters = null)
         {
             try
