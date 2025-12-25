@@ -51,10 +51,10 @@
         </div>
 
         <div class="container">
-            <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="Dashboard.aspx" CssClass="btn-back">? Back to Dashboard</asp:HyperLink>
+            <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="Dashboard.aspx" CssClass="btn-back">Back to Dashboard</asp:HyperLink>
 
             <div class="header-section">
-                <h2>?? My Registered Devices</h2>
+                <h2>My Registered Devices</h2>
                 <p>View all devices registered to your account.</p>
             </div>
 

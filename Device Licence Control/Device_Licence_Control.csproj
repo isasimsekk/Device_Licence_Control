@@ -131,6 +131,7 @@
     <Content Include="images\gear.png" />
     <Content Include="Login.aspx" />
     <Content Include="MyDeviceLicenses.aspx" />
+    <Content Include="MyDevices.aspx" />
     <Content Include="Packages.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisteredDevices.aspx" />
