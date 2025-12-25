@@ -27,8 +27,6 @@
         .form-group input:focus, .form-group select:focus { outline: none; border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .btn-add { background-color: #27ae60; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background-color 0.3s; }
         .btn-add:hover { background-color: #229954; }
-        .btn-unregister { background-color: #e74c3c; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background-color 0.3s; }
-        .btn-unregister:hover { background-color: #c0392b; }
         .message-box { padding: 15px; border-radius: 4px; margin-bottom: 20px; font-weight: 600; }
         .message-box.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         .message-box.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
@@ -105,7 +103,7 @@
                 
                 <asp:Panel ID="pnlDevicesList" runat="server">
                     <div style="overflow-x: auto;">
-                        <asp:GridView ID="gvRegisteredDevices" runat="server" AutoGenerateColumns="False" CssClass="devices-table" OnRowCommand="gvRegisteredDevices_RowCommand">
+                        <asp:GridView ID="gvRegisteredDevices" runat="server" AutoGenerateColumns="False" CssClass="devices-table">
                             <Columns>
                                 <asp:BoundField DataField="DeviceID" HeaderText="Device ID" />
                                 <asp:BoundField DataField="DeviceName" HeaderText="Device Name" />
@@ -114,11 +112,6 @@
                                 <asp:BoundField DataField="TypeName" HeaderText="Device Type" />
                                 <asp:BoundField DataField="RegisterDate" HeaderText="Register Date" DataFormatString="{0:yyyy-MM-dd}" />
                                 <asp:BoundField DataField="Status" HeaderText="Status" />
-                                <asp:TemplateField HeaderText="Action">
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnUnregister" runat="server" Text="Unregister" CssClass="btn-unregister" CommandName="UnregisterDevice" CommandArgument='<%# Eval("DeviceID") + "," + Eval("OwnerID") %>' OnClientClick="return confirm('Are you sure you want to unregister this device?');" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>

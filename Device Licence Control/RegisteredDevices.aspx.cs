@@ -211,36 +211,6 @@ namespace Device_Licence_Control
             Response.Redirect("Login.aspx");
         }
 
-        protected void gvRegisteredDevices_RowCommand(object sender, System.Web.UI.WebControls.GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "UnregisterDevice")
-            {
-                try
-                {
-                    // Extract DeviceID and UserID from CommandArgument
-                    string[] args = e.CommandArgument.ToString().Split(',');
-                    int deviceID = int.Parse(args[0]);
-                    int userID = int.Parse(args[1]);
-
-                    DBConnection db = new DBConnection();
-                    string storedProcedure = "EXEC [dbo].[UnregisterDevice] @DeviceID=" + deviceID + ", @UserID=" + userID;
-                    
-                    // Execute the stored procedure
-                    bool success = db.execute(storedProcedure);
-
-                    // Reload the grid
-                    LoadRegisteredDevices();
-                    
-                    ShowMessage("Device unregistered successfully!", "success");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine("UnregisterDevice Error: " + ex.Message);
-                    ShowMessage("Error: " + ex.Message, "error");
-                }
-            }
-        }
-
         private void ShowMessage(string message, string type)
         {
             lblMessage.Text = message;
