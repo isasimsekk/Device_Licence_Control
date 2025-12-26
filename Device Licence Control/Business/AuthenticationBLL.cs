@@ -11,15 +11,10 @@ namespace Device_Licence_Control.Business
             userDAL = new Data.UserDAL();
         }
 
-        /// <summary>
-        /// Authenticate user with validation and return user details if successful
-        /// Provides user-friendly error messages
-        /// </summary>
         public Models.User AuthenticateUser(int userID, string passwordInput, out string errorMessage)
         {
             errorMessage = string.Empty;
 
-            // 1. Basic Validation
             if (userID <= 0 || string.IsNullOrWhiteSpace(passwordInput))
             {
                 if (userID <= 0 && string.IsNullOrWhiteSpace(passwordInput))
@@ -37,7 +32,6 @@ namespace Device_Licence_Control.Business
                 return null;
             }
 
-            // 2. Validate that Password is a Number
             int passwordNumber;
             if (!int.TryParse(passwordInput, out passwordNumber))
             {
@@ -45,14 +39,12 @@ namespace Device_Licence_Control.Business
                 return null;
             }
 
-            // 3. Validate password length (basic check)
             if (passwordInput.Length < 1)
             {
                 errorMessage = "Password cannot be empty.";
                 return null;
             }
 
-            // 4. Authenticate against database
             try
             {
                 Models.User user = userDAL.AuthenticateUser(userID, passwordNumber);
@@ -63,7 +55,6 @@ namespace Device_Licence_Control.Business
                     return null;
                 }
 
-                // 5. Check if user account is active
                 if (!user.IsActive)
                 {
                     errorMessage = "Your account is currently disabled. Please contact the system administrator for assistance.";
@@ -81,9 +72,6 @@ namespace Device_Licence_Control.Business
             }
         }
 
-        /// <summary>
-        /// Validate user exists by UserID
-        /// </summary>
         public bool ValidateUserExists(int userID)
         {
             try

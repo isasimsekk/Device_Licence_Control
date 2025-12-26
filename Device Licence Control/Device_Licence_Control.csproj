@@ -124,7 +124,6 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DeviceTypes.aspx" />
-    <Content Include="Diagnostic.aspx" />
     <Content Include="EditProfile.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

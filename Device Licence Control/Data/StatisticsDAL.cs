@@ -38,7 +38,7 @@ namespace Device_Licence_Control.Data
         {
             try
             {
-                Device_Licence_Control.DBConnection db = new Device_Licence_Control.DBConnection();
+                DBConnection db = new DBConnection();
                 DataSet ds = db.getSelect(query);
 
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
