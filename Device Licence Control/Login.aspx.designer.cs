@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Device_Licence_Control
-{
-
-
-    public partial class Login
-    {
-
+namespace Device_Licence_Control {
+    
+    
+    public partial class Login {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -22,16 +20,16 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        
         /// <summary>
-        /// txtFullName control.
+        /// txtUserID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFullName;
-
+        protected global::System.Web.UI.WebControls.TextBox txtUserID;
+        
         /// <summary>
         /// txtPassword control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
-
+        
         /// <summary>
         /// btnLogin control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace Device_Licence_Control
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLogin;
-
+        
         /// <summary>
         /// lblMessage control.
         /// </summary>

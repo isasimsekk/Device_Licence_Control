@@ -29,13 +29,23 @@ namespace Device_Licence_Control
         {
             authBLL = new AuthenticationBLL();
 
-            string fullName = txtFullName.Text.Trim();
+            string userIDInput = txtUserID.Text.Trim();
             string passwordInput = txtPassword.Text.Trim();
 
             string errorMessage;
 
+            // Validate UserID is a number
+            int userID;
+            if (!int.TryParse(userIDInput, out userID))
+            {
+                lblMessage.Text = "User ID must be a valid number.";
+                lblMessage.CssClass = "message-box error-msg";
+                txtPassword.Text = "";
+                return;
+            }
+
             // Authenticate user using business logic
-            User user = authBLL.AuthenticateUser(fullName, passwordInput, out errorMessage);
+            User user = authBLL.AuthenticateUser(userID, passwordInput, out errorMessage);
 
             if (user != null)
             {

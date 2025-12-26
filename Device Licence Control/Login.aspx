@@ -180,14 +180,13 @@
             text-align: center;
             min-height: 20px;
         }
-        /* C# Logic often sets colors inline, but we can target specific classes if you set them in C# */
         
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .split-container { flex-direction: column; }
             .brand-side { width: 100%; height: 30%; padding: 30px; }
             .brand-heading { font-size: 2rem; }
-            .brand-subtext { display: none; } /* Hide subtext on mobile */
+            .brand-subtext { display: none; }
             .form-side { width: 100%; height: 70%; align-items: flex-start; }
             .form-wrapper { margin-top: 20px; }
         }
@@ -213,8 +212,8 @@
                     </div>
 
                     <div class="input-group">
-                        <asp:TextBox ID="txtFullName" runat="server" placeholder=" "></asp:TextBox>
-                        <label>Full Name</label>
+                        <asp:TextBox ID="txtUserID" runat="server" placeholder=" " TextMode="Number"></asp:TextBox>
+                        <label>User ID</label>
                     </div>
 
                     <div class="input-group">

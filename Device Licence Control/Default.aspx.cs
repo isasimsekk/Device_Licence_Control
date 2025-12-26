@@ -11,7 +11,15 @@ namespace Device_Licence_Control
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Redirect to Login if user is not logged in
+            if (!Utils.SessionManager.IsUserLoggedIn(this))
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
 
+            // If already logged in, redirect to Dashboard
+            Response.Redirect("Dashboard.aspx");
         }
     }
 }

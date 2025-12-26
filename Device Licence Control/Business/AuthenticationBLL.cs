@@ -15,20 +15,20 @@ namespace Device_Licence_Control.Business
         /// Authenticate user with validation and return user details if successful
         /// Provides user-friendly error messages
         /// </summary>
-        public Models.User AuthenticateUser(string fullName, string passwordInput, out string errorMessage)
+        public Models.User AuthenticateUser(int userID, string passwordInput, out string errorMessage)
         {
             errorMessage = string.Empty;
 
             // 1. Basic Validation
-            if (string.IsNullOrWhiteSpace(fullName) || string.IsNullOrWhiteSpace(passwordInput))
+            if (userID <= 0 || string.IsNullOrWhiteSpace(passwordInput))
             {
-                if (string.IsNullOrWhiteSpace(fullName) && string.IsNullOrWhiteSpace(passwordInput))
+                if (userID <= 0 && string.IsNullOrWhiteSpace(passwordInput))
                 {
-                    errorMessage = "Please enter both Full Name and Password.";
+                    errorMessage = "Please enter both User ID and Password.";
                 }
-                else if (string.IsNullOrWhiteSpace(fullName))
+                else if (userID <= 0)
                 {
-                    errorMessage = "Please enter your Full Name.";
+                    errorMessage = "Please enter a valid User ID.";
                 }
                 else
                 {
@@ -55,11 +55,11 @@ namespace Device_Licence_Control.Business
             // 4. Authenticate against database
             try
             {
-                Models.User user = userDAL.AuthenticateUser(fullName.Trim(), passwordNumber);
+                Models.User user = userDAL.AuthenticateUser(userID, passwordNumber);
 
                 if (user == null)
                 {
-                    errorMessage = "Invalid Full Name or Password. Please try again.";
+                    errorMessage = "Invalid User ID or Password. Please try again.";
                     return null;
                 }
 
@@ -82,13 +82,13 @@ namespace Device_Licence_Control.Business
         }
 
         /// <summary>
-        /// Validate user exists
+        /// Validate user exists by UserID
         /// </summary>
-        public bool ValidateUserExists(string fullName)
+        public bool ValidateUserExists(int userID)
         {
             try
             {
-                return userDAL.UserExists(fullName);
+                return userDAL.UserExists(userID);
             }
             catch (Exception ex)
             {

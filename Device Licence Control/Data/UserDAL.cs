@@ -36,7 +36,7 @@ namespace Device_Licence_Control.Data
         }
 
     
-        public Models.User AuthenticateUser(string fullName, int password)
+        public Models.User AuthenticateUser(int userID, int password)
         {
             try
             {
@@ -44,12 +44,12 @@ namespace Device_Licence_Control.Data
                 {
                     con.Open();
 
-                   
+                    // Query by UserID and Password
                     string query = "SELECT UserId, FullName, Password, IsActive, isAdmin, CreatedAt FROM [User] " +
-                                   "WHERE FullName = @FullName AND Password = @Password";
+                                   "WHERE UserId = @UserID AND Password = @Password";
 
                     SqlCommand cmd = new SqlCommand(query, con);
-                    cmd.Parameters.AddWithValue("@FullName", fullName ?? "");
+                    cmd.Parameters.AddWithValue("@UserID", userID);
                     cmd.Parameters.AddWithValue("@Password", password);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -131,6 +131,49 @@ namespace Device_Licence_Control.Data
             }
         }
 
+        
+        public Models.User GetUserByID(int userID)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+
+                    string query = "SELECT UserId, FullName, Password, IsActive, isAdmin, CreatedAt FROM [User] " +
+                                   "WHERE UserId = @UserID";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows && reader.Read())
+                    {
+                        Models.User user = new Models.User
+                        {
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            FullName = reader["FullName"].ToString(),
+                            Password = Convert.ToInt32(reader["Password"]),
+                            IsActive = Convert.ToBoolean(reader["IsActive"]),
+                            IsAdmin = Convert.ToBoolean(reader["isAdmin"]), 
+                            CreatedDate = Convert.ToDateTime(reader["CreatedAt"]) 
+                        };
+
+                        reader.Close();
+                        return user;
+                    }
+
+                    reader.Close();
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving user: " + ex.Message, ex);
+            }
+        }
+
        
         public bool UserExists(string fullName)
         {
@@ -144,6 +187,31 @@ namespace Device_Licence_Control.Data
 
                     SqlCommand cmd = new SqlCommand(query, con);
                     cmd.Parameters.AddWithValue("@FullName", fullName ?? "");
+
+                    int count = (int)cmd.ExecuteScalar();
+
+                    return count > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error checking user existence: " + ex.Message, ex);
+            }
+        }
+
+        
+        public bool UserExists(int userID)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+
+                    string query = "SELECT COUNT(*) FROM [User] WHERE UserId = @UserID";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@UserID", userID);
 
                     int count = (int)cmd.ExecuteScalar();
 
